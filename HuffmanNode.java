@@ -11,7 +11,7 @@ public class HuffmanNode {
    int frequency;             // long?
    String symbol;             // A-Z, multi-alpha
    
-//   int selfIndex            // i
+   int selfIndex;             // i
    int parentIndex;           // floor(i/2)
    int leftChildIndex;        // 2*i
    int rightChildIndex;       // 2*1 + 1
@@ -21,7 +21,7 @@ public class HuffmanNode {
       frequency = -1;             // long?
       symbol = "";             // A-Z, multi-alpha
       
-//      int selfIndex = 0
+      selfIndex = 0;
       parentIndex = Integer.MIN_VALUE;
       leftChildIndex = Integer.MIN_VALUE;
       rightChildIndex = Integer.MIN_VALUE;
@@ -59,6 +59,20 @@ public class HuffmanNode {
     */
    public void setSymbol(String symbol) {
       this.symbol = symbol;
+   }
+
+   /**
+    * @return the selfIndex
+    */
+   public int getSelfIndex() {
+      return selfIndex;
+   }
+
+   /**
+    * @param selfIndex the selfIndex to set
+    */
+   public void setSelfIndex(int selfIndex) {
+      this.selfIndex = selfIndex;
    }
 
    /**

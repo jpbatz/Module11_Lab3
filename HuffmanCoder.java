@@ -17,7 +17,8 @@ public class HuffmanCoder {
    public HuffmanCoder() {
 
    // I.   Create a Huffman Encoded Binary Tree
-
+//   HuffmanBinaryTree hbt = new HuffmanBinaryTree();
+      
    // Rules:
    // 1.Numeric left to right
    // 2.Tie Breakers: 
@@ -43,6 +44,7 @@ public class HuffmanCoder {
       BufferedReader encodedTextData;
       BufferedWriter results;
       
+      int n = 0;   // frequency table size (# of symbols)
       char coderMode;
       
       String line = "";
@@ -58,6 +60,7 @@ public class HuffmanCoder {
       String binarySample = "1101101000010001111100011111101000000101100";
 
       HuffmanCoder hc = new HuffmanCoder();
+      HuffmanBinaryTree hbtree = new HuffmanBinaryTree();
 
       
       //  Check for command line arguments.
@@ -68,18 +71,17 @@ public class HuffmanCoder {
                                      " <input_filename to encode or decode>");
           System.exit(1);
       }
-
+      
       coderMode = args[0].toUpperCase().toCharArray()[0];
 //      System.out.println(coderMode);
       
       results = hc.openOutputHandler(args[3], "Output Results filename: ");
       freqTable = hc.openInputHandler(args[1], "Frequency Table filename: ");
-      hc.loadFreqTable(freqTable, symbols, frequencies);
-      hc.printFreqTable(symbols, frequencies);
+      n = hc.loadFreqTableArray(freqTable, symbols, frequencies);
+//      hc.printFreqTable(symbols, frequencies);
       
       // build the min heap Huffman Binary Tree
-      // hc.buildHBT(symbols, frequencies);
-      
+      hbtree.buildHuffmanBinaryTree(symbols, frequencies, n);
       
       if(coderMode == 'E') {
          System.out.println("Mode: Encode Text");
@@ -178,21 +180,23 @@ public class HuffmanCoder {
       return fileText;
    }
    
-   private void loadFreqTable(BufferedReader br, String syms[], String freqs[]) {
+   private int loadFreqTableArray(BufferedReader br, String syms[], String freqs[]) {
       int index = 1;
       String line = "";
+      int symCount = 0;
 
       try {
          while(((line = br.readLine())!=null)) {
             syms[index] = line.substring(0, 1);
             freqs[index] = line.substring(4);
+            symCount++;
             index++;
          }
       } catch (IOException ioe) {
          System.err.println(ioe.toString());
          System.exit(2);
       }
-      
+      return symCount;
    }
    
    // prints symbols and frequencies
