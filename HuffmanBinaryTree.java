@@ -8,12 +8,12 @@ package Module11_Lab3;
  *
  */
 public class HuffmanBinaryTree {
-   
+
    HuffmanNode [] HBTree;
    int firstNodeIndex;
    int lastNodeIndex;
    int numOfNodes;
-   
+
    public HuffmanBinaryTree() {
       HBTree = new HuffmanNode[MAX_ALPHA_SIZE];
       HBTree[0] = null;
@@ -21,18 +21,11 @@ public class HuffmanBinaryTree {
       lastNodeIndex = 0;
       numOfNodes = 0;
    }
-   
+
+
    public void buildMinHeapBinaryTree(String [] syms, String [] freqs, int size) {
       
       int currNodeIndex = 0;
-      int parentIndex;
-      
-      String currSym;   // for percolation swap
-      int currFreq;     // for percolation swap
-      String tempSym;   // for percolation swap
-      int tempFreq;     // for percolation swap
-
-      int index;
       
       System.out.println("Size = " + size);
       
@@ -46,46 +39,22 @@ public class HuffmanBinaryTree {
       this.lastNodeIndex = currNodeIndex;
       
       // build binary tree, top down
-      this.printFreqTableHeader();
+//      this.printFreqTableHeader();
       
       for (currNodeIndex=1; currNodeIndex<=size; currNodeIndex++) {
          newNode = this.makeNewNode(size, syms[currNodeIndex], freqs[currNodeIndex], currNodeIndex);
          this.HBTree[currNodeIndex] = newNode;
-         this.printNode(newNode);
+//         this.printNode(newNode);
          this.lastNodeIndex = currNodeIndex;
          
-         // adjust min heap
-         if (this.isRoot(currNodeIndex)) {
-            // at root, do nothing
-            System.out.println("buildMinHeapBinaryTree(): ROOT");
-         } else {
-            index = currNodeIndex;
-            System.out.println("buildMinHeapBinaryTree(): Node " + index);
-
-            while (!this.isRoot(index)) {
-               parentIndex = this.HBTree[index].getParentIndex();
-               if (this.HBTree[index].getFrequency() 
-                     < this.HBTree[parentIndex].getFrequency()) {
-                  // percolate upward until root
-                  System.out.println("buildMinHeapBinaryTree(): PercolateUP() " + index);
-                  currSym = this.HBTree[index].getSymbol();
-                  currFreq = this.HBTree[index].getFrequency();
-                  tempSym = this.HBTree[parentIndex].getSymbol();
-                  tempFreq = this.HBTree[parentIndex].getFrequency();
-                  this.HBTree[parentIndex].setSymbol(currSym);
-                  this.HBTree[parentIndex].setFrequency(currFreq);
-                  this.HBTree[index].setSymbol(tempSym);
-                  this.HBTree[index].setFrequency(tempFreq);
-                  index = (int) (index/2);
-               } else {
-                  break;
-               }
-            }
-         }
+         // adjust min priority heap
+         this.adjustMinHeap(currNodeIndex);
+         
       }
       return;
    }
-   
+
+
    public HuffmanNode makeNewNode(int size, String sym, String freq, int index) {
       
       HuffmanNode temp = new HuffmanNode();
@@ -107,6 +76,7 @@ public class HuffmanBinaryTree {
    }
    
 
+
    // build encoded binary tree, top down
    public void buildHuffmanEncodedTree() {
       
@@ -123,21 +93,53 @@ public class HuffmanBinaryTree {
       //          simple node (shorter symbol first or left)
       //          if same length
       //             alpha first (left)
-
    }
-   
+
+
+   private void adjustMinHeap(int currIndex) {
+      
+      int parentIndex;
+      int index;
+      
+      if (this.isRoot(currIndex)) {
+         // at root, do nothing
+//         System.out.println("buildMinHeapBinaryTree(): ROOT");
+      } else {
+         index = currIndex;
+//         System.out.println("buildMinHeapBinaryTree(): Node " + index);
+
+         // percolate upward until root
+         while (!this.isRoot(index)) {
+            parentIndex = this.HBTree[index].getParentIndex();
+            if (this.HBTree[index].getFrequency() 
+                  < this.HBTree[parentIndex].getFrequency()) {
+//               System.out.println("buildMinHeapBinaryTree(): PercolateUP() " + index);
+               this.swapNodes(index, parentIndex);
+               index = (int) (index/2);
+            } else {
+               break;
+            }
+         }
+      }
+   }
+
+
    private boolean isRoot(int index) {
       return (index == 1);
    }
-   
+
+
+
    // ***** ACCESSOR METHODS ***** //
-   
+
+
    /**
     * @return the numOfNodes
     */
    public int getNumOfNodes() {
       return numOfNodes;
    }
+
 
    /**
     * @param numOfNodes the numOfNodes to set
@@ -146,12 +148,33 @@ public class HuffmanBinaryTree {
       this.numOfNodes = numOfNodes;
    }
 
+
+   private void swapNodes(int index, int pIndex) {
+      
+      String currSym;   // for percolation swap
+      int currFreq;     // for percolation swap
+      String tempSym;   // for percolation swap
+      int tempFreq;     // for percolation swap
+      
+      currSym = this.HBTree[index].getSymbol();
+      currFreq = this.HBTree[index].getFrequency();
+      tempSym = this.HBTree[pIndex].getSymbol();
+      tempFreq = this.HBTree[pIndex].getFrequency();
+      this.HBTree[pIndex].setSymbol(currSym);
+      this.HBTree[pIndex].setFrequency(currFreq);
+      this.HBTree[index].setSymbol(tempSym);
+      this.HBTree[index].setFrequency(tempFreq);
+      return;
+   }
+
+
    private HuffmanNode getParentNode(int index) {
       int parentIndex;
       parentIndex = this.HBTree[index].getParentIndex();
       return this.HBTree[parentIndex];
    }
-   
+
+
    private void printFreqTableHeader() {
       System.out.println("Symbol Table Node: " + 
             "Symbol Frequency " +
@@ -161,7 +184,8 @@ public class HuffmanBinaryTree {
             "RightChildIndex " +
             "LeafNode");
    }
-   
+
+
    private void printNode(HuffmanNode hnode) {
       System.out.println("Symbol Table Node: " 
             + hnode.getSymbol() + " " 
@@ -172,13 +196,15 @@ public class HuffmanBinaryTree {
             + hnode.getRightChildIndex() + " " 
             + hnode.isLeftChild());
    }
-   
+
+
    public void printMinHeap() {
       for(int i=1; i<=this.lastNodeIndex; i++) {
          System.out.println(this.HBTree[i].getSymbol() + " " + this.HBTree[i].getFrequency());
       }
    }
-   
+
+
    // print Huffman Tree nodes in pre-order
    // print all tree nodes (sorted by highest to lowest frequency)
    // top - down by sibling levels
@@ -191,7 +217,8 @@ public class HuffmanBinaryTree {
       
       return;
    }
-   
+
+
    // print tree leaf nodes to get codes
    // top - down
    //    left subtree leaves (0) - right subtree leaves (1)
@@ -213,9 +240,8 @@ public class HuffmanBinaryTree {
       // System.out.print(HBTree[i].symbol + " = " + HBTree[i].frequency + "; ");
       return;
    }
-   
-   
-   
+
+
    // *** PRIVATE ATTRIBUTES ***** //
    
    // this lab: A to Z and null bit string:
