@@ -83,6 +83,8 @@ public class HuffmanCoder {
       // build the min heap binary tree
       hbtree.buildMinHeapBinaryTree(symbols, frequencies, n);
       
+      hbtree.printMinHeap();
+      
       // build the Huffman encoded tree
       
       
