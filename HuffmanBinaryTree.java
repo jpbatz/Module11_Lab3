@@ -29,27 +29,26 @@ public class HuffmanBinaryTree {
       
       System.out.println("Size = " + size);
       
-      this.HBTree[currNodeIndex] = null;   // null bit string at index = 0
+      this.HBTree[currNodeIndex] = null;     // null bit string at index = 0
       
       HuffmanNode newNode;
 
       // add first (root) node at index 1
       currNodeIndex++;
       this.firstNodeIndex = currNodeIndex;   // should remain as 1
-      this.lastNodeIndex = currNodeIndex;
+      this.lastNodeIndex = size;
       
       // build binary tree, top down
-//      this.printFreqTableHeader();
+      // this.printFreqTableHeader();
       
       for (currNodeIndex=1; currNodeIndex<=size; currNodeIndex++) {
          newNode = this.makeNewNode(size, syms[currNodeIndex], freqs[currNodeIndex], currNodeIndex);
          this.HBTree[currNodeIndex] = newNode;
-//         this.printNode(newNode);
-         this.lastNodeIndex = currNodeIndex;
+         // this.printNode(newNode);
+         // this.lastNodeIndex = currNodeIndex;
          
-         // adjust min priority heap
-         this.adjustMinHeap(currNodeIndex);
-         
+         // adjust min priority heap down
+         this.adjustMinHeapDown(currNodeIndex);
       }
       return;
    }
@@ -74,16 +73,57 @@ public class HuffmanBinaryTree {
       }
       return temp;
    }
-   
 
 
-   // build encoded binary tree, top down
-   public void buildHuffmanEncodedTree() {
+   private void adjustMinHeapDown(int currIndex) {
       
+      int parentIndex;
+      int index;
+      
+      if (this.isRoot(currIndex)) {
+         // at root, do nothing
+         // System.out.println("buildMinHeapBinaryTree(): ROOT");
+      } else {
+         index = currIndex;
+         // System.out.println("buildMinHeapBinaryTree(): Node " + index);
+
+         // percolate down (toward root)
+         while (!this.isRoot(index)) {
+            parentIndex = this.HBTree[index].getParentIndex();
+            if (this.HBTree[index].getFrequency() 
+                  < this.HBTree[parentIndex].getFrequency()) {
+               // System.out.println("buildMinHeapBinaryTree(): PercolateUP() " + index);
+               this.swapNodes(index, parentIndex);
+               index = (int) (index/2);
+            } else {
+               break;
+            }
+         }
+      }
+   }
+
+
+   // build encoded binary tree
+   // - remove 2 min nodes from top
+   // - combine into single node
+   // - insert combined node at bottom
+   public void buildHuffmanEncodedTree() {
+
+      HuffmanNode node1;
+      HuffmanNode node2;
+      HuffmanNode combinedNode;
+
       // remove root node1 (min freq)
-      //    adjust min heap/percolate down
+      node1 = this.HBTree[ROOT_INDEX];
+      
+      //    adjust min heap/percolate up
+      
+      
       // remove root node2 (min freq)
-      //    adjust min heap/percolate down
+      node2 = this.HBTree[ROOT_INDEX];
+      
+
+      //    adjust min heap/percolate up
       //
       // combine newNode = node1 and node 2
       //
@@ -96,31 +136,12 @@ public class HuffmanBinaryTree {
    }
 
 
-   private void adjustMinHeap(int currIndex) {
-      
-      int parentIndex;
-      int index;
-      
-      if (this.isRoot(currIndex)) {
-         // at root, do nothing
-//         System.out.println("buildMinHeapBinaryTree(): ROOT");
-      } else {
-         index = currIndex;
-//         System.out.println("buildMinHeapBinaryTree(): Node " + index);
+   private void adjustMinHeapUp(int currIndex) {
 
-         // percolate upward until root
-         while (!this.isRoot(index)) {
-            parentIndex = this.HBTree[index].getParentIndex();
-            if (this.HBTree[index].getFrequency() 
-                  < this.HBTree[parentIndex].getFrequency()) {
-//               System.out.println("buildMinHeapBinaryTree(): PercolateUP() " + index);
-               this.swapNodes(index, parentIndex);
-               index = (int) (index/2);
-            } else {
-               break;
-            }
-         }
-      }
+      int childIndex;
+      int index;
+
+      
    }
 
 
@@ -243,7 +264,8 @@ public class HuffmanBinaryTree {
 
 
    // *** PRIVATE ATTRIBUTES ***** //
-   
+
+   private static final int ROOT_INDEX = 1;
    // this lab: A to Z and null bit string:
    private static final int MAX_ALPHA_SIZE = 27;
    

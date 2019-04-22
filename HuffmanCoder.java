@@ -42,7 +42,7 @@ public class HuffmanCoder {
       BufferedReader encodedTextData;
       BufferedWriter results;
 
-      int n = 0;   // frequency table size (# of symbols)
+      int numSyms = 0;   // frequency table size (# of symbols)
       char coderMode;
 
       String [] symbols = new String[MAXSYMBOLS];
@@ -73,16 +73,18 @@ public class HuffmanCoder {
 
       results = hc.openOutputHandler(args[3], "Output Results filename: ");
       freqTable = hc.openInputHandler(args[1], "Frequency Table filename: ");
-      n = hc.loadFreqTableArray(freqTable, symbols, frequencies);
+      numSyms = hc.loadFreqTableArray(freqTable, symbols, frequencies);
       hc.closeInputFileHandler(freqTable);
 //      hc.printFreqTable(symbols, frequencies);
 
       // build the min heap binary tree
-      hbtree.buildMinHeapBinaryTree(symbols, frequencies, n);
-
+      hbtree.buildMinHeapBinaryTree(symbols, frequencies, numSyms);
       hbtree.printMinHeap();
 
       // build the Huffman encoded tree
+      hbtree.buildHuffmanEncodedTree();
+      
+      
       if(coderMode == 'E') {
          System.out.println("Mode: Encode Text");
          clearTextData = hc.openInputHandler(args[2], "Plain Input filename: ");
