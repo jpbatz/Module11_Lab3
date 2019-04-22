@@ -80,8 +80,11 @@ public class HuffmanCoder {
       n = hc.loadFreqTableArray(freqTable, symbols, frequencies);
 //      hc.printFreqTable(symbols, frequencies);
       
-      // build the min heap Huffman Binary Tree
-      hbtree.buildHuffmanBinaryTree(symbols, frequencies, n);
+      // build the min heap binary tree
+      hbtree.buildMinHeapBinaryTree(symbols, frequencies, n);
+      
+      // build the Huffman encoded tree
+      
       
       if(coderMode == 'E') {
          System.out.println("Mode: Encode Text");
