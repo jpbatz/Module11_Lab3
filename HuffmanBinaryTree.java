@@ -132,10 +132,8 @@ public class HuffmanBinaryTree {
          // one node first:
       
          // remove root minNode1 (min freq)
-         System.out.println("ROOT NODE: " + this.HBTree[ROOT_INDEX].getSymbol() + " " 
-                                          + this.HBTree[ROOT_INDEX].getFrequency() + " " + 
-                            "LAST NODE: " + this.HBTree[this.lastNodeIndex].getSymbol() + " " 
-                                          + this.HBTree[lastNodeIndex].getFrequency());
+         this.printRootLastNode();
+
          minNode1 = this.deleteRoot();
          // push to temp stack
          superNodeArray[snArrIndex] = minNode1;
@@ -147,10 +145,8 @@ public class HuffmanBinaryTree {
          
          
          // remove root minNode2 (min freq)
-         System.out.println("ROOT NODE: " + this.HBTree[ROOT_INDEX].getSymbol() + " " 
-                                          + this.HBTree[ROOT_INDEX].getFrequency() + " " + 
-                            "LAST NODE: " + this.HBTree[this.lastNodeIndex].getSymbol() + " " 
-                                          + this.HBTree[lastNodeIndex].getFrequency());
+         this.printRootLastNode();
+
          minNode2 = this.deleteRoot();
          // push to temp stack
          snArrIndex++;
@@ -162,10 +158,8 @@ public class HuffmanBinaryTree {
          this.adjustMinHeapUp(ROOT_INDEX);
          
          // combine super node = minNode1 and minNode2
-         System.out.println("ROOT NODE: " + this.HBTree[ROOT_INDEX].getSymbol() + " " 
-                                          + this.HBTree[ROOT_INDEX].getFrequency() + " " + 
-                            "LAST NODE: " + this.HBTree[this.lastNodeIndex].getSymbol() + " " 
-                                        + this.HBTree[lastNodeIndex].getFrequency());
+         this.printRootLastNode();
+
          superNode = this.makeSuperNode(minNode1, minNode2);
          
          // push to temp stack
@@ -480,6 +474,13 @@ public class HuffmanBinaryTree {
    }
 
 
+   private void printRootLastNode() {
+      System.out.println("ROOT NODE: " + this.HBTree[ROOT_INDEX].getSymbol() + " " 
+               + this.HBTree[ROOT_INDEX].getFrequency() + " " + 
+            "LAST NODE: " + this.HBTree[this.lastNodeIndex].getSymbol() + " " 
+               + this.HBTree[lastNodeIndex].getFrequency());
+   }
+   
    // print Huffman Tree nodes in pre-order
    // print all tree nodes (sorted by highest to lowest frequency)
    // top - down by sibling levels
