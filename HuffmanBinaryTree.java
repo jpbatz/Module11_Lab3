@@ -195,6 +195,12 @@ public class HuffmanBinaryTree {
          //             simple node (shorter symbol first or left)
       }   // end while
       //empty tree
+      
+      System.out.println("SuperNodeArray: Length = " + superNodeArray.length);
+      for(int i=1; i<78; i++) {
+         System.out.println("SuperNodeArray: " + "[" + i + "]" + superNodeArray[i].getSymbol());
+      }
+      
       this.resetTree();
       // encode the tree (resets tree)
       this.encodeTree(superNodeArray);
@@ -463,9 +469,11 @@ public class HuffmanBinaryTree {
       }
       
       // removed last node, so tree is empty
-      if (this.HBTree[1].getSymbol().length() == this.getNumOfNodes()) {
+      if (this.HBTree[ROOT_INDEX].getSymbol().length() == this.getNumOfNodes()) {
+         System.out.println("[HuffmanBinaryTree - deleteRoot()]: Setting Tree to Null");
          this.treeIsNull = true;
       }
+      System.out.println("[HuffmanBinaryTree - deleteRoot()]: Returning Node " + hnode.getSymbol());
       return hnode;
    }
 
