@@ -76,7 +76,7 @@ public class HuffmanCoder {
       freqTable = hc.openInputHandler(args[1], "Frequency Table filename: ");
       numSyms = hc.loadFreqTableArray(freqTable, symbols, frequencies);
       hc.closeInputFileHandler(freqTable);
-//      hc.printFreqTable(symbols, frequencies);
+      hc.printFreqTable(symbols, frequencies);
 
       // build the min heap binary tree
       hbtree.buildMinHeapBinaryTree(symbols, frequencies, numSyms);
@@ -86,6 +86,7 @@ public class HuffmanCoder {
       // build the Huffman encoded tree
       hbtree.buildHuffmanEncodedTree();
       
+      hbtree.printMinHeap();
       
       if(coderMode == 'E') {
          System.out.println("Mode: Encode Text");
