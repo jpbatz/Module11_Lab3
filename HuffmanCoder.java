@@ -57,7 +57,8 @@ public class HuffmanCoder {
 
       HuffmanCoder hc = new HuffmanCoder();
       HuffmanBinaryTree hbtree = new HuffmanBinaryTree();
-
+      // System.out.println("[HuffmanCoder - main()]: Test HBTree for Null = " + (hbtree == null));
+      // System.out.println("[HuffmanCoder - main()]: Test ROOT for Null = " + (hbtree.HBTree[0] == null));
 
       //  Check for command line arguments.
       if (args.length != 4) {
@@ -81,6 +82,7 @@ public class HuffmanCoder {
       hbtree.buildMinHeapBinaryTree(symbols, frequencies, numSyms);
       hbtree.printMinHeap();
 
+      System.out.println("[HuffmanCoder - main()]: Last Node Index = " + hbtree.getLastNodeIndex());
       // build the Huffman encoded tree
       hbtree.buildHuffmanEncodedTree();
       

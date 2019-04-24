@@ -18,14 +18,34 @@ public class HuffmanNode {
    boolean leftChild;         // indicates left or right child
    
    public HuffmanNode() {
-      frequency = -1;             // long?
-      symbol = "";             // A-Z, multi-alpha
+      
+      symbol = "";            // A-Z, multi-alpha
+      frequency = -1;         // long?
       
       selfIndex = 0;
       parentIndex = Integer.MIN_VALUE;
       leftChildIndex = Integer.MIN_VALUE;
       rightChildIndex = Integer.MIN_VALUE;
    }
+   
+   public HuffmanNode(HuffmanNode hnode) {
+      symbol = hnode.getSymbol();
+      frequency = hnode.getFrequency();
+      selfIndex = 0;
+      parentIndex = Integer.MIN_VALUE;
+      leftChildIndex = Integer.MIN_VALUE;
+      rightChildIndex = Integer.MIN_VALUE;
+   }
+   
+   public HuffmanNode(String sym, int freq) {
+      this.symbol = sym;
+      this.frequency = freq;
+      selfIndex = 0;
+      parentIndex = Integer.MIN_VALUE;
+      leftChildIndex = Integer.MIN_VALUE;
+      rightChildIndex = Integer.MIN_VALUE;
+   }
+   
 
    public int addNode() {
       return 0;
@@ -122,9 +142,17 @@ public class HuffmanNode {
     * @return the leftChild
     */
    public boolean isLeftChild() {
-      return leftChild;
+      return (this.selfIndex % 2 == 0);
    }
 
+   /**
+    * @param leftChild the leftChild to set
+    */
+   public boolean getLeftChild() {
+      return this.leftChild;
+   }
+   
+   
    /**
     * @param leftChild the leftChild to set
     */
@@ -132,8 +160,11 @@ public class HuffmanNode {
       this.leftChild = leftChild;
    }
 
+
+   // a leaf has no children
    public boolean isLeafNode() {
       // both children are null
+      System.out.println("[HuffmanNode - isLeafNode()]: leftChildIndex = " + this.getLeftChildIndex() + " rightChildIndex = " + this.getRightChildIndex());
       return
       (
          (this.leftChildIndex == Integer.MIN_VALUE) && 
@@ -141,9 +172,21 @@ public class HuffmanNode {
       );
    }
    
+
+
+
+//   private boolean isLeaf(HuffmanNode hnode) {
+//      System.out.println("[isLeaf()]: leftChildIndex = " + hnode.getLeftChildIndex() + " rightChildIndex = " + hnode.getRightChildIndex() + " LastIndex = " + this.getLastNodeIndex());
+//      return ((hnode.leftChildIndex == Integer.MIN_VALUE) && 
+//              (hnode.rightChildIndex == Integer.MIN_VALUE));
+//   }
+   
+   
+   
    public boolean isRootNode() {
-      // parent is null
-      return (this.parentIndex == Integer.MIN_VALUE);
+      // root has not parent and is at index 1
+//      return (this.parentIndex == Integer.MIN_VALUE);
+      return (this.getSelfIndex() == 1);
    }
    
 }
