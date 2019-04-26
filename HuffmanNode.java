@@ -202,6 +202,17 @@ public class HuffmanNode {
       return "";
    }
    
+
+
+   public void resetNode() {
+      this.setSymbol("");
+      this.setFrequency(0);
+      this.setSelfIndex(0);
+      this.setParentIndex(Integer.MIN_VALUE);
+      this.setLeftChildIndex(Integer.MIN_VALUE);
+      this.setRightChildIndex(Integer.MIN_VALUE);
+      this.setLeftChild(false);
+   }
    
    /* (non-Javadoc)
     * @see java.lang.Object#toString()

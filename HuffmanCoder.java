@@ -53,7 +53,7 @@ public class HuffmanCoder {
 
       // Sample string
       String sampleString = "Hello World";
-      String binarySample = "1101101000010001111100011111101000000101100";
+      String binarySample = "11011 010 0001 0001 11110 0011 11110 1000 0001 01100";
 
       HuffmanCoder hc = new HuffmanCoder();
       HuffmanBinaryTree hbtree = new HuffmanBinaryTree();
@@ -71,13 +71,12 @@ public class HuffmanCoder {
 
       coderMode = args[0].toUpperCase().toCharArray()[0];
       if ((coderMode != 'D') && (coderMode != 'E')){
-         System.out.println("Invalid Mode: Expecting 'D' or 'E'");
+         System.out.println("\nInvalid Mode: Expecting 'D' or 'E'");
          System.exit(1);
       }
       
       freqTable = hc.openInputHandler(args[1], "Frequency Table file: ");
       results = hc.openOutputHandler(args[3], " Output Results file: ");
-      System.out.println();
 
       // load symbols and frequencies from frequency table input file
       numSyms = hc.loadFreqTableArray(freqTable, symbols, frequencies);
@@ -94,10 +93,10 @@ public class HuffmanCoder {
       hbtree.printMinHeap();   // after
       
       // traverse encoded tree and print sym-freq nodes
-      // hbtree.printEncodedTree();
+       hbtree.printEncodedTree();
 
-      // traverse encoded tree and print cdoes
-      // hbtree.printCode();
+      // traverse encoded tree and print codes
+      hbtree.printCode();
       
       // decode or encode input files
       // write results to output
@@ -107,6 +106,7 @@ public class HuffmanCoder {
             System.out.println("Mode: Encode Text");
             clearTextData = hc.openInputHandler(args[2], 
                   "Clear Text Input filename: ");
+            System.out.println();
             clearTextString = hc.readFile(clearTextData);
             System.out.println(clearTextString + "\n");
             hc.closeInputFileHandler(clearTextData);
@@ -119,6 +119,7 @@ public class HuffmanCoder {
             System.out.println("Mode: Decode Text");
             encodedTextData = hc.openInputHandler(args[2], 
                   "Encoded Input filename: ");
+            System.out.println();
             encodedString = hc.readFile(encodedTextData);
             System.out.println(encodedString + "\n");
             hc.closeInputFileHandler(encodedTextData);
@@ -160,7 +161,6 @@ public class HuffmanCoder {
       try {
          handler = new BufferedReader(new FileReader(argument));
          System.out.println(message + argument);
-         System.out.println();
       } catch (IOException ioe) {
          System.err.println(ioe.toString());
          System.exit(3);
@@ -247,7 +247,7 @@ public class HuffmanCoder {
       return symCount;
    }
 
-   // prints symbols and frequencies
+   // prints symbols and frequencies arrays
    private void printFreqTable(String syms[], String freqs[], int size) {
       
       System.out.println("[HuffmanCoder - printFreqTable()]\n" 
@@ -279,6 +279,5 @@ public class HuffmanCoder {
    }
 
    // ***** CONSTANTS ***** //
-   private static final int MIN        = 1;
    private static final int MAXSYMBOLS = 27; // includes null bit string
 }
