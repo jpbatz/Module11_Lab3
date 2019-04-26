@@ -17,8 +17,9 @@ public class HuffmanNode {
    int rightChildIndex;       // 2*1 + 1
    boolean leftChild;         // indicates left or right child
    
+   // generic constructor
    public HuffmanNode() {
-      
+      super();
       symbol = "";            // A-Z, multi-alpha
       frequency = -1;         // long?
       
@@ -26,8 +27,10 @@ public class HuffmanNode {
       parentIndex = Integer.MIN_VALUE;
       leftChildIndex = Integer.MIN_VALUE;
       rightChildIndex = Integer.MIN_VALUE;
+      leftChild = false;
    }
    
+   // constructor for copying node
    public HuffmanNode(HuffmanNode hnode) {
       symbol = hnode.getSymbol();
       frequency = hnode.getFrequency();
@@ -35,8 +38,10 @@ public class HuffmanNode {
       parentIndex = Integer.MIN_VALUE;
       leftChildIndex = Integer.MIN_VALUE;
       rightChildIndex = Integer.MIN_VALUE;
+      leftChild = false;
    }
    
+   // constructor for creating super nodes
    public HuffmanNode(String sym, int freq) {
       this.symbol = sym;
       this.frequency = freq;
@@ -44,14 +49,10 @@ public class HuffmanNode {
       parentIndex = Integer.MIN_VALUE;
       leftChildIndex = Integer.MIN_VALUE;
       rightChildIndex = Integer.MIN_VALUE;
+      leftChild = false;
    }
-   
 
-   public int addNode() {
-      return 0;
-   }
-   
-   
+
    // ***** ACCESSOR METHODS ***** //
    /**
     * @return the frequency
@@ -136,14 +137,7 @@ public class HuffmanNode {
    public void setRightChildIndex(int rightChildIndex) {
       this.rightChildIndex = rightChildIndex;
    }
-   
-   
-   /**
-    * @return the leftChild
-    */
-   public boolean isLeftChild() {
-      return (this.selfIndex % 2 == 0);
-   }
+
 
    /**
     * @param leftChild the leftChild to set
@@ -161,32 +155,66 @@ public class HuffmanNode {
    }
 
 
-   // a leaf has no children
-   public boolean isLeafNode() {
-      // both children are null
-      System.out.println("[HuffmanNode - isLeafNode()]: leftChildIndex = " + this.getLeftChildIndex() + " rightChildIndex = " + this.getRightChildIndex());
-      return
-      (
-         (this.leftChildIndex == Integer.MIN_VALUE) && 
-         (this.rightChildIndex == Integer.MIN_VALUE)
-      );
+   /**
+    * @return the leftChild
+    */
+   public boolean isLeftChild() {
+      return (this.selfIndex % 2 == 0);
    }
-   
 
 
-
-//   private boolean isLeaf(HuffmanNode hnode) {
-//      System.out.println("[isLeaf()]: leftChildIndex = " + hnode.getLeftChildIndex() + " rightChildIndex = " + hnode.getRightChildIndex() + " LastIndex = " + this.getLastNodeIndex());
-//      return ((hnode.leftChildIndex == Integer.MIN_VALUE) && 
-//              (hnode.rightChildIndex == Integer.MIN_VALUE));
-//   }
-   
+   // a leaf has no children, both children are null
+   public boolean isLeafNode() {
+      
+      boolean result;
+      
+      if ((this.leftChildIndex == Integer.MIN_VALUE)
+            && (this.rightChildIndex == Integer.MIN_VALUE)) {
+         result = true;
+      } else {
+         result = false;
+      }
+      
+      System.out.println("[HuffmanNode - isLeafNode()]:" 
+            + " Self Index = " + this.getSelfIndex() 
+            + " / leftChildIndex = " + this.getLeftChildIndex() 
+            + " / rightChildIndex = " + this.getRightChildIndex() 
+            + " / isLeaf = " + result);
+      
+      return result;
+   }
    
    
    public boolean isRootNode() {
-      // root has not parent and is at index 1
-//      return (this.parentIndex == Integer.MIN_VALUE);
+      // root has no parent and is at index 1
       return (this.getSelfIndex() == 1);
+   }
+
+   public String sortSymbol(String str) {
+      // TODO sort and return the letters in the string argument
+      
+      char [] charArray = str.toUpperCase().toCharArray();
+      // sort the elements of the array
+      for (char c : charArray) {
+         System.out.println(c);
+         //test...
+      }
+      return "";
+   }
+   
+   
+   /* (non-Javadoc)
+    * @see java.lang.Object#toString()
+    */
+   @Override
+   public String toString() {
+      return "HuffmanNode [symbol=" + symbol 
+            + " | frequency=" + frequency 
+            + " | selfIndex=" + selfIndex 
+            + " | parentIndex=" + parentIndex
+            + " | leftChildIndex=" + leftChildIndex 
+            + " | rightChildIndex=" + rightChildIndex 
+            + " | leftChild=" + leftChild + "]";
    }
    
 }
