@@ -1,16 +1,14 @@
 /**
- * 
+ * Module 11: Lab 3
+ * Joanne Hayashi
+ * EN.605.202.84.SP19
  */
 package Module11_Lab3;
 
-/**
- * @author jph
- *
- */
 public class HuffmanNode {
-   int frequency;             // long?
-   String symbol;             // A-Z, multi-alpha
    
+   int frequency;
+   String symbol;             // A-Z, multi-alpha
    int selfIndex;             // i
    int parentIndex;           // floor(i/2)
    int leftChildIndex;        // 2*i
@@ -20,8 +18,8 @@ public class HuffmanNode {
    // generic constructor
    public HuffmanNode() {
       super();
-      symbol = "";            // A-Z, multi-alpha
-      frequency = -1;         // long?
+      symbol = "";
+      frequency = -1;
       
       selfIndex = 0;
       parentIndex = Integer.MIN_VALUE;
@@ -185,13 +183,33 @@ public class HuffmanNode {
    }
    
    
+   public int getSymbolSize() {
+      if ((this.getSymbol() != null) && (this.getSymbol() != "")) {
+         return this.getSymbol().length();
+      } else {
+         return 0;
+      }
+   }
+   
+   
+   // identifies boundary, node 1, root
    public boolean isRootNode() {
       // root has no parent and is at index 1
       return (this.getSelfIndex() == 1);
    }
 
+
+   // to break frequency and simplicity tie
+   public char getFirstChar() {  // from symbol
+      char arr[] = this.getSymbol().toCharArray();
+      return arr[0];  // returns first char
+   }
+   
+   
+   // to break frequency and simplicity tie
+   // TODO sort entire string
    public String sortSymbol(String str) {
-      // TODO sort and return the letters in the string argument
+   // TODO sort and return the letters in the string argument
       
       char [] charArray = str.toUpperCase().toCharArray();
       // sort the elements of the array
@@ -203,7 +221,9 @@ public class HuffmanNode {
    }
    
 
-
+   /**
+    * 
+    */
    public void resetNode() {
       this.setSymbol("");
       this.setFrequency(0);
@@ -219,13 +239,13 @@ public class HuffmanNode {
     */
    @Override
    public String toString() {
-      return "HuffmanNode [symbol=" + symbol 
-            + " | frequency=" + frequency 
-            + " | selfIndex=" + selfIndex 
-            + " | parentIndex=" + parentIndex
-            + " | leftChildIndex=" + leftChildIndex 
-            + " | rightChildIndex=" + rightChildIndex 
-            + " | leftChild=" + leftChild + "]";
+      return "[HuffmanNode - toString()]: [" + this.selfIndex + "] "
+            + this.symbol + " " 
+            + this.frequency
+            + " | parentIndex=" + this.parentIndex
+            + " | leftChildIndex=" + this.leftChildIndex 
+            + " | rightChildIndex=" + this.rightChildIndex 
+            + " | leftChild=" + this.leftChild;
    }
    
 }
